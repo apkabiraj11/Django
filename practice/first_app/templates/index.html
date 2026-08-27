@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="p-4">
+
+    <h1 class="mb-3">This is index page</h1>
+    <h3 class="mb-4">Here are following meals</h3>
+
+    <div class="d-flex justify-content-start flex-wrap gap-3 mt-4">
+
+        {% for i in meals %}
+
+            <div class="card" style="width: 18rem;">
+
+                <img src="{{i.strMealThumb}}"
+                     class="card-img-top"
+                     alt="{{i.strMeal}}">
+
+                <div class="card-body">
+
+                    <h5 class="card-title">{{i.strMeal}}</h5>
+
+                    <p class="card-text">
+                        Some quick example text to build on the card title.
+                    </p>
+
+                    <a href="{% url 'meal_page' i.idMeal %}"
+                       class="btn btn-primary">
+                        Go somewhere
+                    </a>
+
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
