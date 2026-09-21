@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from .forms import *
 
 # Create your views here.
 def index(request):
@@ -33,10 +34,60 @@ def index(request):
     "title": "nesciunt quas odio",
     "body": "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque"
   }]
-    return render(request, 'index.html', {"data": data})
+    name = request.POST.get('username', '')
+    email = request.POST.get('email', '')
+    return render(request, 'index.html', {"data": data, "name": name, "email": email})
 
 
 
 def about(request):
-    print(request.GET)
-    return render(request, 'index.html', {'id' : request.GET})
+    if request.method == 'POST':
+      print(request.POST)
+      name = request.POST.get('username', '')
+      email = request.POST.get('email', '')
+      select = request.POST.get('select', '')
+      return render(request, 'about.html', {'name': name, 'email': email, 'select':select})
+    return render(request, 'about.html')
+
+def submit_form(request):
+      return render(request, 'form.html')
+
+def DjangoForm(request):
+    if request.method == 'POST':
+      form = ContactForm(request.POST, request.FILES)
+      if form.is_valid():
+        # file = form.cleaned_data['file']
+        # with open('./first_app/upload/' + file.name, 'wb+') as destination:
+        #     for chunk in file.chunks():
+        #         destination.write(chunk)
+
+        print(form.cleaned_data)
+        return render(request, 'DjangoForm.html', {'form' : form})
+    else :
+         form = ContactForm()
+    return  render(request, 'DjangoForm.html', {'form': form})
+
+
+    
+def StudentForm(request):
+    if request.method == 'POST':
+      form = StudentData(request.POST, request.FILES)
+      if form.is_valid():
+        print(form.cleaned_data)
+    else :
+        form = StudentData()
+    return  render(request, 'DjangoForm.html', {'form': form})
+
+
+    
+def PasswordValidation(request):
+    if request.method == 'POST':
+      form = PasswordValidationProject(request.POST)
+      if form.is_valid():
+        print(form.cleaned_data)
+    else :
+        form = PasswordValidationProject()
+    return  render(request, 'DjangoForm.html', {'form': form})
+
+
+    
